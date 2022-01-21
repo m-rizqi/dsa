@@ -1,6 +1,7 @@
 package datastructures.dynamicarray;
 
 import java.util.Iterator;
+import java.util.StringJoiner;
 
 @SuppressWarnings("unchecked")
 public class DynamicArray<T> implements Iterable<T> {
@@ -86,8 +87,37 @@ public class DynamicArray<T> implements Iterable<T> {
         return true;
     }
 
+    public boolean contains(T data){
+        return indexOf(data) != -1;
+    }
+
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new Iterator<T>() {
+            int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < len;
+            }
+
+            @Override
+            public T next() {
+                return arr[index++];
+            }
+        };
+    }
+
+    @Override
+    public String toString() {
+        if (len == 0) return "[]";
+        else {
+            StringJoiner joiner = new StringJoiner(",","[","]");
+            for (T data:
+                 arr) {
+                joiner.add(data.toString());
+            }
+            return joiner.toString();
+        }
     }
 }
