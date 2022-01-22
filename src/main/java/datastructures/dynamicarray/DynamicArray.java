@@ -108,6 +108,18 @@ public class DynamicArray<T> implements Iterable<T> {
         };
     }
 
+    public int getCapacity(){
+        return capacity;
+    }
+
+    public T[] toArray(){
+        T[] temp_arr = (T[]) new Object[len];
+        for (int i = 0; i < len; i++) {
+            temp_arr[i] = arr[i];
+        }
+        return temp_arr;
+    }
+
     @Override
     public String toString() {
         if (len == 0) return "[]";
@@ -119,4 +131,5 @@ public class DynamicArray<T> implements Iterable<T> {
             return joiner.toString();
         }
     }
+
 }
