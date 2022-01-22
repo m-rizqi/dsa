@@ -1,6 +1,8 @@
 package datastructures.linkedlist;
 
-public class SingleLinkedList<T> {
+import java.util.Iterator;
+
+public class SingleLinkedList<T> implements Iterable<T>{
     private int size = 0;
     private Node<T> head = null;
     private Node<T> tail = null;
@@ -58,6 +60,68 @@ public class SingleLinkedList<T> {
     }
 
     public void addFirst(T elem){
-
+        if (isEmpty()){
+            head = tail = new Node<T>(elem, null);
+        }else{
+            Node<T> newNode = new Node<>(elem, head);
+            head = newNode;
+        }
+        size++;
     }
+
+    public void addAt(int index, T elem) {
+        if (index < 0 || index > size()){
+            throw new IndexOutOfBoundsException();
+        }
+        if (index == 0){
+            addFirst(elem);
+            return;
+        }
+        if (index == size){
+            addLast(elem);
+            return;
+        }
+        Node<T> temp = head;
+        for (int i = 0; i < index - 1; i++) {
+            temp = temp.next;
+        }
+        Node<T> newNode = new Node<>(elem, temp.next);
+        temp.next = newNode;
+        size++;
+    }
+
+    public T peekFirst(){
+        if (isEmpty()) throw new RuntimeException("Empty List");
+        return head.data;
+    }
+
+    public T peekLast(){
+        if (isEmpty()) throw new RuntimeException("Empty List");
+        return tail.data;
+    }
+
+    public T peekAt(int index){
+        if (isEmpty()) throw new RuntimeException("Empty List");
+        if (index < 0 || index > size()) throw new IndexOutOfBoundsException();
+        Node<T> temp = head;
+        for (int i = 0; i < index - 1; i++) {
+            temp = temp.next;
+        }
+        return temp.data;
+    }
+
+    public T removeFirst(){
+        if (isEmpty()) throw new RuntimeException("Empty List");
+        T data = head.data;
+        head = head.next;
+        --size;
+        if (isEmpty()) tail = null;
+        return data;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return null;
+    }
+
 }
