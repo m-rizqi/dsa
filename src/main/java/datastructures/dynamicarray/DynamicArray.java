@@ -124,7 +124,7 @@ public class DynamicArray<T> implements Iterable<T> {
     public String toString() {
         if (len == 0) return "[]";
         else {
-            StringJoiner joiner = new StringJoiner(",","[","]");
+            StringJoiner joiner = new StringJoiner(", ","[","]");
             for (int i = 0; i < len; i++) {
                 joiner.add(arr[i].toString());
             }

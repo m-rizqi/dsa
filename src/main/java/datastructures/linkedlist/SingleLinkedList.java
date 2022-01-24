@@ -1,6 +1,7 @@
 package datastructures.linkedlist;
 
 import java.util.Iterator;
+import java.util.StringJoiner;
 
 public class SingleLinkedList<T> implements Iterable<T>{
     private int size = 0;
@@ -119,9 +120,105 @@ public class SingleLinkedList<T> implements Iterable<T>{
         return data;
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return null;
+    public T removeLast(){
+        if (isEmpty()) throw new RuntimeException("Empty List");
+        T data = tail.data;
+        Node<T> temp = head;
+        for (int i = 0; i < size() - 1; i++) {
+            temp = temp.next;
+        }
+        temp.next = null;
+        tail = temp;
+        --size;
+        if (isEmpty()) head = null;
+        return data;
     }
 
+    public T removeAt(int index){
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+        if (index == 0) return removeFirst();
+        if (index == size - 1) return removeLast();
+        Node<T> trav = head;
+        for (int i = 0; i < index - 1; i++) {
+            trav = trav.next;
+        }
+        trav.next = trav.next.next;
+        --size;
+        return trav.data;
+    }
+
+    public boolean remove(T obj){
+        Node<T> trav = head;
+        int index = 0;
+        if (obj == null){
+            for (;trav != null; trav = trav.next){
+                if (trav.data == null){
+                    removeAt(index);
+                    return true;
+                }
+                index++;
+            }
+        }else {
+            for (;trav != null; trav = trav.next){
+                if (obj.equals(trav.data)){
+                    removeAt(index);
+                    return true;
+                }
+                index++;
+            }
+        }
+        return false;
+    }
+
+    public int indexOf(T obj){
+        int index = 0;
+        Node<T> trav = head;
+        if (obj == null){
+            for (;trav != null; trav = trav.next, index++){
+                if (trav.data == null){
+                    return index;
+                }
+            }
+        }else {
+            for (;trav != null; trav = trav.next, index++){
+                if (obj.equals(trav.data)){
+                    return index;
+                }
+            }
+        }
+        return -1;
+    }
+
+    public boolean contains(T obj){
+        return indexOf(obj) != -1;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private Node<T> trav = head;
+            @Override
+            public boolean hasNext() {
+                return trav != null;
+            }
+
+            @Override
+            public T next() {
+                T data = trav.data;
+                trav = trav.next;
+                return data;
+            }
+        };
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        Node<T> trav = head;
+        while (trav != null){
+            joiner.add(trav.data.toString());
+            trav = trav.next;
+        }
+        return joiner.toString();
+    }
 }
