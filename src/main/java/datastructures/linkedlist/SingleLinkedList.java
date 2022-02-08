@@ -150,9 +150,10 @@ public class SingleLinkedList<T> implements Iterable<T>{
         for (int i = 0; i < index - 1; i++) {
             trav = trav.next;
         }
+        T data = trav.next.data;
         trav.next = trav.next.next;
         --size;
-        return trav.data;
+        return data;
     }
 
     public boolean remove(T obj){

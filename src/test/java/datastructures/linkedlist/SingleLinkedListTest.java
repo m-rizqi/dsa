@@ -20,7 +20,7 @@ public class SingleLinkedListTest {
     @Test
     public void size(){
         assertEquals(0, singleLinkedList.size());
-        addNodes(5);
+        addRandomData(5);
         assertEquals(5, singleLinkedList.size());
     }
 
@@ -29,7 +29,7 @@ public class SingleLinkedListTest {
         assertTrue(singleLinkedList.isEmpty());
         assertNull(singleLinkedList.getHead());
         assertNull(singleLinkedList.getTail());
-        addNodes(5);
+        addRandomData(5);
         assertFalse(singleLinkedList.isEmpty());
         assertNotNull(singleLinkedList.getHead());
         assertNotNull(singleLinkedList.getTail());
@@ -37,7 +37,7 @@ public class SingleLinkedListTest {
 
     @Test
     public void clear(){
-        addNodes(5);
+        addRandomData(5);
         assertEquals(5, singleLinkedList.size());
         assertNotNull(singleLinkedList.getHead());
         assertNotNull(singleLinkedList.getTail());
@@ -78,7 +78,7 @@ public class SingleLinkedListTest {
     public void addAt(){
         assertNull(singleLinkedList.getHead());
         assertNull(singleLinkedList.getTail());
-        addNodes(5);
+        addRandomData(5);
         singleLinkedList.addAt(0, 9);
         singleLinkedList.addAt(1,19);
         singleLinkedList.addAt(7, 3);
@@ -111,7 +111,7 @@ public class SingleLinkedListTest {
     public void peekAt(){
         assertNull(singleLinkedList.getHead());
         assertNull(singleLinkedList.getTail());
-        addNodes(5);
+        addRandomData(5);
         singleLinkedList.addAt(3, 10);
         assertEquals(10, singleLinkedList.peekAt(3));
         singleLinkedList.addFirst(6);
@@ -135,8 +135,6 @@ public class SingleLinkedListTest {
 
     @Test
     public void removeLast(){
-        assertNull(singleLinkedList.getHead());
-        assertNull(singleLinkedList.getTail());
         singleLinkedList.add(1);
         singleLinkedList.add(2);
         singleLinkedList.add(3);
@@ -150,12 +148,70 @@ public class SingleLinkedListTest {
         assertEquals(2, singleLinkedList.size());
     }
 
+    @Test
+    public void removeAt(){
+        singleLinkedList.add(1);
+        singleLinkedList.add(2);
+        singleLinkedList.add(3);
+        singleLinkedList.add(4);
+        singleLinkedList.add(5);
+        assertEquals(2, singleLinkedList.removeAt(1));
+        assertEquals(4, singleLinkedList.size());
+        assertEquals(3, singleLinkedList.removeAt(1));
+        assertEquals(3, singleLinkedList.size());
+        assertEquals(5, singleLinkedList.removeAt(2));
+        assertEquals(2, singleLinkedList.size());
+        assertEquals(4, singleLinkedList.getTail().getData());
+    }
+
+    @Test
+    public void remove(){
+        singleLinkedList.add(1);
+        singleLinkedList.add(2);
+        singleLinkedList.add(3);
+        singleLinkedList.add(4);
+        singleLinkedList.add(5);
+        assertTrue(singleLinkedList.remove(3));
+        assertEquals(4, singleLinkedList.size());
+        assertFalse(singleLinkedList.remove(6));
+        assertEquals(4, singleLinkedList.size());
+        assertEquals(4,singleLinkedList.peekAt(2));
+    }
+
+    @Test
+    public void indexOf(){
+        singleLinkedList.add(1);
+        singleLinkedList.add(2);
+        singleLinkedList.add(3);
+        singleLinkedList.add(4);
+        singleLinkedList.add(5);
+        assertEquals(2,singleLinkedList.indexOf(3));
+        assertEquals(-1, singleLinkedList.indexOf(7));
+    }
+
+    @Test
+    public void contains(){
+        singleLinkedList.add(1);
+        singleLinkedList.add(2);
+        singleLinkedList.add(3);
+        singleLinkedList.add(4);
+        singleLinkedList.add(5);
+        assertTrue(singleLinkedList.contains(2));
+        assertFalse(singleLinkedList.contains(7));
+    }
+
+    @Test
+    public void print(){
+        addRandomData(7);
+        System.out.println(singleLinkedList.toString());
+    }
+
     @BeforeEach
     public void resetLinkedList(){
         singleLinkedList = new SingleLinkedList<>();
     }
 
-    private void addNodes(int size){
+    private void addRandomData(int size){
         for (int i = 0; i < size; i++) {
             singleLinkedList.add(new Random().nextInt());
         }
