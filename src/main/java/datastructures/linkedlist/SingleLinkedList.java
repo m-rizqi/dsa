@@ -8,7 +8,7 @@ public class SingleLinkedList<T> implements Iterable<T>{
     private Node<T> head = null;
     private Node<T> tail = null;
 
-    private class Node<T> {
+    public class Node<T> {
         private T data;
         private Node<T> next;
 
@@ -23,6 +23,14 @@ public class SingleLinkedList<T> implements Iterable<T>{
                     "data=" + data +
                     ", prev=" + next +
                     '}';
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public Node<T> getNext() {
+            return next;
         }
     }
 
@@ -105,7 +113,7 @@ public class SingleLinkedList<T> implements Iterable<T>{
         if (isEmpty()) throw new RuntimeException("Empty List");
         if (index < 0 || index > size()) throw new IndexOutOfBoundsException();
         Node<T> temp = head;
-        for (int i = 0; i < index - 1; i++) {
+        for (int i = 0; i <= index - 1; i++) {
             temp = temp.next;
         }
         return temp.data;
@@ -124,11 +132,11 @@ public class SingleLinkedList<T> implements Iterable<T>{
         if (isEmpty()) throw new RuntimeException("Empty List");
         T data = tail.data;
         Node<T> temp = head;
-        for (int i = 0; i < size() - 1; i++) {
+        for (int i = 1; i < size - 1; i++) {
             temp = temp.next;
         }
-        temp.next = null;
         tail = temp;
+        tail.next = null;
         --size;
         if (isEmpty()) head = null;
         return data;
