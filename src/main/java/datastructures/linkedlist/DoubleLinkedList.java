@@ -115,6 +115,18 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return tail.data;
     }
 
+    public T peekAt(int index){
+        if (isEmpty()) throw new RuntimeException("Empty List");
+        if (index < 0 || index > size()) throw new IndexOutOfBoundsException();
+        if (index == 0) return peekFirst();
+        if (index == size) return peekLast();
+        Node<T> temp = head;
+        for (int i = 0; i <= index - 1; i++) {
+            temp = temp.next;
+        }
+        return temp.data;
+    }
+
     public T removeFirst(){
         if (isEmpty()) throw new RuntimeException("Empty list");
         T data = head.data;
