@@ -1,6 +1,7 @@
 package datastructures.binaryheap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,12 +10,7 @@ public class BinaryHeap<T extends Comparable<T>> {
 
     // Construct and initially empty priority queue
     public BinaryHeap(){
-        this(1);
-    }
-
-    // Construct a priority queue with an initial capacity
-    public BinaryHeap(int size){
-        heap = new ArrayList<>(size);
+        heap = new ArrayList<>();
     }
 
     // Construct a priority queue using heapify in O(n) time, a great explanation can be found at:
