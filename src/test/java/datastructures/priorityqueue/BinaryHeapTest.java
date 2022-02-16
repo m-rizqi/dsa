@@ -1,4 +1,4 @@
-package datastructures.binaryheap;
+package datastructures.priorityqueue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

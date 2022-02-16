@@ -1,7 +1,6 @@
-package datastructures.binaryheap;
+package datastructures.priorityqueue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 

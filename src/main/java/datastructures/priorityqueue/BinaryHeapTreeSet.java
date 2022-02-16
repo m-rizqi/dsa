@@ -1,4 +1,4 @@
-package datastructures.binaryheap;
+package datastructures.priorityqueue;
 
 import java.util.*;
 
@@ -148,6 +148,122 @@ public class BinaryHeapTreeSet<T extends Comparable<T>>{
         heap.set(j, i_elem);
 
         mapSwap(i_elem, j_elem, i, j);
+    }
+
+    // Removes a particular element in the heap, O(log(n))
+    public boolean remove(T element){
+        if (element == null) return false;
+
+        // Linear removal via search, O(n)
+        // for (int i = 0; i < heapSize; i++) {
+        //   if (element.equals(heap.get(i))) {
+        //     removeAt(i);
+        //     return true;
+        //   }
+        // }
+
+        // Logarithmic removal with map, O(log(n))
+        Integer index = mapGet(element);
+        if (index != null) removeAt(index);
+        return index != null;
+    }
+
+    // Removes a node at particular index, O(log(n))
+    private T removeAt(int i){
+        if (isEmpty()) return null;
+
+        int lastIndex = size() - 1;
+        T removed_data = heap.get(i);
+        swap(i, lastIndex);
+
+        // Obliterate the value
+        heap.remove(lastIndex);
+        mapRemove(removed_data, lastIndex);
+
+        // Removed last element
+        if (i == lastIndex) return removed_data;
+
+        T elem = heap.get(i);
+
+        // Try sinking element;
+        sink(i);
+
+        // If sinking did not work, try swimming
+        if (heap.get(i).equals(elem)) swim(i);
+
+        return removed_data;
+    }
+
+    // Recursively checks if this heap is a min heap
+    // This method is just for testing purposes to make
+    // sure the heap invariant is still being maintained
+    // Called this method with k=0 to start at the root
+    public boolean isMinHeap(int k){
+
+        // If we are outside the bounds, return true
+        int heapSize = size();
+        if (k >= heapSize) return true;
+
+        int left = 2 * k + 1;
+        int right = 2 * k + 2;
+
+        // Make sure that the current node k is less than
+        // both of its children left, and right if they exist
+        // return false otherwise to indicate an invalid heap
+        if (left < heapSize && !less(k, left)) return false;
+        if (right < heapSize && !less(k, right)) return false;
+
+        // Recurse on both children to make sure they are also valid heaps
+        return isMinHeap(left) && isMinHeap(right);
+    }
+
+    // Add a node value and its index to the map
+    private void mapAdd(T value, int index){
+
+        TreeSet<Integer> set = map.get(value);
+
+        // New value being inserted in map
+        if (set == null){
+            set = new TreeSet<>();
+            set.add(index);
+            map.put(value, set);
+
+            // Value already exist in map
+        } else set.add(index);
+
+    }
+
+    // Removes the index at given value, O(log(n))
+    private void mapRemove(T value, int index){
+        TreeSet<Integer> set = map.get(value);
+        set.remove(index);
+        if (set.size() == 0) map.remove(value);
+    }
+
+    // Extract an index position for the given value
+    // NOTE: If a value exists multiple times in the heap the highest
+    // index is returned (this has arbitrarily been chosen)
+    private Integer mapGet(T value){
+        TreeSet<Integer> set = map.get(value);
+        if (set != null) return set.last();
+        return null;
+    }
+
+    // Exchange the index of two nodes internally within the map
+    private void mapSwap(T val1, T val2, int val1Index, int val2Index){
+        Set<Integer> set1 = map.get(val1);
+        Set<Integer> set2 = map.get(val2);
+
+        set1.remove(val1Index);
+        set2.remove(val2Index);
+
+        set1.add(val2Index);
+        set2.add(val1Index);
+    }
+
+    @Override
+    public String toString() {
+        return heap.toString();
     }
 
 }
