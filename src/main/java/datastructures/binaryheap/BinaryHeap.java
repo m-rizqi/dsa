@@ -193,6 +193,10 @@ public class BinaryHeap<T extends Comparable<T>> {
         return isMinHeap(left) && isMinHeap(right);
     }
 
+    public int indexOf(T elem){
+        return heap.indexOf(elem);
+    }
+
     @Override
     public String toString() {
         return heap.toString();
