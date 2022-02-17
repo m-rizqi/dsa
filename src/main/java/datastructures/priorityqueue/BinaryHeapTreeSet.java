@@ -51,6 +51,10 @@ public class BinaryHeapTreeSet<T extends Comparable<T>>{
         map.clear();
     }
 
+    public int indexOf(T elem){
+        return mapGet(elem);
+    }
+
     // Return the size of the heap
     public int size() {
         return heap.size();
